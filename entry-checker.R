@@ -1,5 +1,25 @@
 #!/usr/bin/env Rscript
 
+#' -----------------------------------------------------------------------------
+#' entry-checker.R
+#'
+#' A tool to perform basic checks on a CSV containing data about the ongoing
+#' coronavirus outbreak.
+#' -----------------------------------------------------------------------------
+#' USAGE
+#'
+#' $ ./entry-checker.R
+#'
+#' -----------------------------------------------------------------------------
+#' CHANGELOG
+#'
+#' - 29-01-2020
+#'   + Include some sensible tests suggested by Erin Frame.
+#'
+#' - 28-01-2020
+#'   + Basic test to check some entries match regexes
+#' -----------------------------------------------------------------------------
+
 
 #' We want the dates to parse to something that is not in the future and not before January 2019. Since there are multiple ways the data can be expressed, we need to be careful to check that they all make sense.
 
