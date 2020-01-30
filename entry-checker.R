@@ -32,7 +32,7 @@ dates_parse_to_plausible_values <- list(
         non_empty_date_strings <- all_date_strings[non_empty_mask]
         all(sapply(non_empty_date_strings, .is_plausible_date_string))
     },
-    success_message = "all dates seem plausible\n",
+    success_message = "all dates can be parsed and are plausible.\n",
     error_message = function(df) {
         "look at the dates_parse_to_plausible_values test for details.\n"
     }
@@ -52,9 +52,9 @@ sensible_dates <- list(
       .date_regex_check(df$date_confirmation)
     ))
   },
-  success_message = "all dates match regex\n",
+  success_message = "all dates match regex for dd.mm.yyyy or a range of these.\n",
   error_message = function(df) {
-    "at least one date string does not look right.\n"
+      "look at the sensible_dates test for details.\n"
   }
 )
 
@@ -67,7 +67,7 @@ sensible_ages <- list(
   },
   success_message = "all ages match regex\n",
   error_message = function(df) {
-    "at least one age entry does not look right.\n"
+      "look at the sensible_ages test for details.\n"
   }
 )
 
