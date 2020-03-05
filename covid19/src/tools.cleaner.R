@@ -103,18 +103,27 @@ expect_true(all(c(1,3,2) == extended_ids(c(1,NA,2))))
 expect_true(all(c(1,2,3) == extended_ids(c(1,2,3))))
 expect_true(all(c(1,2,6,7) == extended_ids(c(1,2,6,NA))))
 
-strpdate <- function(date_strings) {
+strpdate <- function(date_strings, literal_na_values = FALSE) {
+    if (class(date_strings) != "character") {
+        browser()
+        stop()
+    }
     ## strpdate :: String -> Maybe Date
     .strpdate <- function(strings) {
         as.Date(strings, format = "%d.%m.%Y", origin = "01.01.1970")
     }
     ## validate input.
-    na_mask <- date_strings == "NA"
+    if (literal_na_values) {
+        na_mask <- is.na(date_strings)
+    } else {
+        na_mask <- date_strings == na_string
+    }
     range_mask <- grepl(pattern = anchor_wrap(.rgx_date_range), x = date_strings)
     single_mask <- grepl(pattern = anchor_wrap(.rgx_date), x = date_strings)
     left_mask <- grepl(pattern = anchor_wrap(.rgx_left_date_range), x = date_strings)
     if (!all(na_mask | range_mask | single_mask | left_mask)) {
         browser()
+        stop()
     }
     ## construct result
     maybe_dates <- rep(NA, length(date_strings))
