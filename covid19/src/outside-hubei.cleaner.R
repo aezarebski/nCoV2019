@@ -51,6 +51,7 @@ stopifnot(!any(is.na(tmp_ids)))
 y$id <- tmp_ids
 stopifnot(!any(is.na(y$id)))
 
+stopifnot(nrow(y) == init_num_rows)
 #' -----------------------------------------------------------------------------
 #' The valid missing value for date_confirmation is not the empty string.
 #' -----------------------------------------------------------------------------
@@ -80,6 +81,7 @@ rm(tmp_mask)
 #' -----------------------------------------------------------------------------
 #' Filter for only values where the confirmation date is not after 5th Feb 2020.
 #' -----------------------------------------------------------------------------
+stopifnot(nrow(y) == init_num_rows)
 tmp_mask <- is.na_or_true(strpdate(y$date_confirmation) <= as.Date("05.02.2020", format = "%d.%m.%Y", origin = "01.01.1970"))
 y <- y[tmp_mask,]
 stopifnot(!any(is.na(y$id)))
