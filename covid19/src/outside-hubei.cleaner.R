@@ -38,9 +38,10 @@ source("src/tools.cleaner.R")
 
 data_file <- "raw-data/outside-hubei.csv"
 x <- subset(read.csv(data_file, stringsAsFactors = FALSE), select = -not_wuhan)
+init_num_rows <- nrow(x)
 y <- x
 
-
+stopifnot(nrow(y) == init_num_rows)
 #' -----------------------------------------------------------------------------
 #' Fix the missing identifiers such that every record has a unique value without
 #' ever overwriting an existing identifier.
