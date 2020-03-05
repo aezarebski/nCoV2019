@@ -10,6 +10,8 @@
 #' ChangeLog:
 #'
 #' - 05-03-20
+#'   + Remove trailing white space that crept in.
+#'   + Fix incorrectly coded travel dates.
 #'   + Rename this file and input/output files.
 #'   + Remove some confirmation dates from the future.
 #'   + Fix broken missing value in chronic_disease_binary.
@@ -199,10 +201,17 @@ rm(tmp_mask)
 
 
 #' -----------------------------------------------------------------------------
-#' The valid missing value for geo_resolution is not the empty string.
+#' The valid missing value for geo_resolution is not "#N/A".
 #' -----------------------------------------------------------------------------
 tmp_mask <- y$geo_resolution == "#N/A"
 y$geo_resolution[tmp_mask] <- na_string
+rm(tmp_mask)
+
+#' -----------------------------------------------------------------------------
+#' Fix any broken point values.
+#' -----------------------------------------------------------------------------
+tmp_mask <- y$geo_resolution == "point "
+y$geo_resolution[tmp_mask] <- "point"
 rm(tmp_mask)
 
 #' -----------------------------------------------------------------------------
@@ -331,6 +340,15 @@ rm(tmp_mask)
 tmp_mask <- y$travel_history_dates == "1.16.2020"
 y$travel_history_dates[tmp_mask] <- "16.01.2020"
 rm(tmp_mask)
+## Osaka Travel History from Feb15 to Feb 16
+tmp_mask <- y$travel_history_dates == "Osaka Travel History from Feb15 to Feb 16"
+y$travel_history_dates[tmp_mask] <- "15.02.2020 - 16.02.2020"
+rm(tmp_mask)
+
+#' -----------------------------------------------------------------------------
+#' Remove trailing white space from travel_date_history
+#' -----------------------------------------------------------------------------
+y$travel_history_dates <- trimws(y$travel_history_dates, which = "right")
 
 #' -----------------------------------------------------------------------------
 #' The valid missing value for date_death_or_discharge is not the empty string.
@@ -367,6 +385,11 @@ rm(tmp_mask)
 tmp_mask <- y$lives_in_wuhan == ""
 y$lives_in_wuhan[tmp_mask] <- na_string
 rm(tmp_mask)
+
+#' -----------------------------------------------------------------------------
+#' Remove trailing white space from lives_in_wuhan
+#' -----------------------------------------------------------------------------
+y$lives_in_wuhan <- trimws(y$lives_in_wuhan, which = "right")
 
 #' -----------------------------------------------------------------------------
 #' Correct some mis-codings for lives_in_wuhan
